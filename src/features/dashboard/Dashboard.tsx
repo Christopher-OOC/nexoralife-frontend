@@ -215,7 +215,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   if (isLoading && isMetricsTab) {
     return (
-      <div className="flex h-screen bg-white dark:bg-emerald-950 items-center justify-center">
+      <div className="flex h-screen bg-white dark:bg-[#07090c] items-center justify-center">
         <div className="text-center space-y-4">
           <Loader2 className="w-12 h-12 text-yellow-600 animate-spin mx-auto" />
           <p className="text-emerald-600 font-bold animate-pulse tracking-widest uppercase text-xs">
@@ -228,7 +228,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   if (error) {
     return (
-      <div className="flex h-screen bg-white dark:bg-emerald-950 items-center justify-center p-8">
+      <div className="flex h-screen bg-white dark:bg-[#07090c] items-center justify-center p-8">
         <ErrorState
           title="Dashboard Error"
           message={error}
@@ -240,7 +240,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   }
 
   return (
-    <div className="flex h-screen bg-white dark:bg-emerald-950 text-emerald-950 dark:text-emerald-100 overflow-hidden font-sans transition-colors duration-500">
+    <div className="flex h-screen bg-white dark:bg-[#07090c] text-emerald-950 dark:text-slate-100 overflow-hidden font-sans transition-colors duration-500">
       <Sidebar
         onLogout={onLogout}
         isCollapsed={isSidebarCollapsed}
@@ -257,17 +257,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
         }}
       />
 
-      <main className="flex-1 flex flex-col overflow-hidden relative">
+      <main className="relative flex flex-1 flex-col overflow-hidden bg-slate-50 dark:bg-[#090c0f]">
         {/* Background Gradient Overlay */}
-        <div className="absolute inset-0 bg-linear-to-br from-yellow-500/5 via-transparent to-amber-400/5 pointer-events-none" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-lime-400/[0.035] via-transparent to-emerald-400/[0.02]" />
 
         {/* Top Bar */}
-        <header className="h-12 border-b border-emerald-100 dark:border-white/5 px-3 flex items-center justify-between bg-white/80 dark:bg-emerald-950/50 backdrop-blur-xl z-10">
+        <header className="z-10 flex h-16 items-center justify-between border-b border-slate-200 bg-white/90 px-5 backdrop-blur-xl dark:border-white/[0.07] dark:bg-[#090c0f]/90">
           <div className="flex-1" /> {/* Spacer */}
 
-          <div className="flex items-center space-x-1.5">
-            <img src={logo} alt="Logo" className="w-4 h-4 object-contain" />
-            <span className="text-base font-bold text-emerald-950 dark:text-white tracking-tight">crystalgreengold</span>
+          <div className="flex items-center space-x-2">
+            <img src={logo} alt="Logo" className="h-6 w-6 object-contain" />
+            <span className="text-sm font-semibold tracking-tight text-slate-900 dark:text-white">NexoraLife Global</span>
           </div>
 
           <div className="flex-1 flex justify-end items-center space-x-2">
@@ -359,8 +359,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </header>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto p-3 custom-scrollbar relative z-0">
-          <div className="max-w-5xl mx-auto space-y-3">
+        <div className="relative z-0 flex-1 overflow-y-auto p-4 custom-scrollbar sm:p-6">
+          <div className="mx-auto max-w-7xl space-y-6">
             {activeTab === 'dashboard' ? (
               <div className="space-y-3">
                 {/* Dashboard Header */}
@@ -672,7 +672,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   <div className="w-6 h-6 bg-amber-400 rounded-lg flex items-center justify-center">
                     <img src={logo} alt="Logo" className="w-3.5 h-3.5 object-contain brightness-0 invert" />
                   </div>
-                  <span className="text-sm font-bold text-emerald-950 dark:text-white">crystalgreengold</span>
+                  <span className="text-sm font-bold text-emerald-950 dark:text-white">NexoraLife Global</span>
                 </div>
                 <div className="space-y-0.5">
                   <button className="block text-[10px] text-emerald-600 hover:text-amber-400 transition-colors">Privacy Policy</button>
@@ -710,21 +710,21 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   ))}
                 </div>
                 <div className="space-y-0.5">
-                  <p className="text-[9px] text-emerald-600">090crystalgreengold</p>
-                  <p className="text-[9px] text-emerald-600">crystalgreengoldinfo@gmail.com</p>
+                  <p className="text-[9px] text-emerald-600">Natural Wellness · People · Opportunity</p>
+                  <p className="text-[9px] text-emerald-600">Building your network. Growing your future.</p>
                 </div>
               </div>
             </div>
             <div className="pb-4 flex flex-col md:flex-row justify-between items-center gap-2">
               <div className="flex flex-wrap gap-2 text-[8px] font-bold text-emerald-400 dark:text-emerald-700 uppercase tracking-widest">
                 <span>Category</span>
-                <span className="text-emerald-200 dark:text-emerald-400">Perfumes</span>
-                <span className="text-emerald-200 dark:text-emerald-400">Cosmetics</span>
-                <span className="text-emerald-200 dark:text-emerald-400">Soaps</span>
-                <span className="text-emerald-200 dark:text-emerald-400">and So Much More...</span>
+                <span className="text-emerald-200 dark:text-emerald-400">Wellness Products</span>
+                <span className="text-emerald-200 dark:text-emerald-400">Everyday Living</span>
+                <span className="text-emerald-200 dark:text-emerald-400">Personal Growth</span>
+                <span className="text-emerald-200 dark:text-emerald-400">Community</span>
               </div>
               <p className="text-[8px] font-bold text-emerald-400 dark:text-emerald-700 uppercase tracking-widest">
-                © 2025 crystalgreengold. All rights reserved.
+                © 2026 NexoraLife Global Ltd. All rights reserved.
               </p>
             </div>
           </footer>

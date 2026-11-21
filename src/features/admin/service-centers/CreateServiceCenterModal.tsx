@@ -241,7 +241,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               <div>
                 <label className={labelClass}>Business Name *</label>
                 <input type="text" value={formData.businessName} onChange={(e) => set('businessName', e.target.value)}
-                  disabled={isLoading} placeholder="e.g. crystalgreengold Lagos Center" className={inputClass} />
+                  disabled={isLoading} placeholder="e.g. NexoraLife Lagos Center" className={inputClass} />
               </div>
               <div>
                 <label className={labelClass}>Address *</label>

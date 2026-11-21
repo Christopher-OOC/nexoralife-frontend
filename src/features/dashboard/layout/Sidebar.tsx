@@ -76,27 +76,27 @@ const menuItems = [
   { icon: Info, label: 'About Us', id: 'about-us' },
 ];
   return (
-    <aside className={`${isCollapsed ? 'w-16' : 'w-60'} h-full bg-white dark:bg-emerald-950 border-r border-emerald-100 dark:border-white/5 flex flex-col transition-all duration-500 relative group/sidebar`}>
+    <aside className={`${isCollapsed ? 'w-16' : 'w-64'} relative group/sidebar flex h-full shrink-0 flex-col border-r border-slate-200 bg-white transition-all duration-300 dark:border-white/10 dark:bg-slate-950`}>
       {/* Toggle Button */}
       <button 
         onClick={onToggle}
-        className="absolute -right-3 top-24 w-6 h-6 bg-amber-400 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-50"
+        className="absolute -right-3 top-24 w-6 h-6 bg-lime-400 text-slate-950 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-50"
       >
         <ChevronRight size={14} className={`transition-transform duration-300 ${isCollapsed ? '' : 'rotate-180'}`} />
       </button>
 
-      <div className={`p-3 flex items-center ${isCollapsed ? 'justify-center' : 'space-x-2'}`}>
-        <div className="w-7 h-7 bg-amber-400 rounded-lg flex items-center justify-center shadow-lg shadow-amber-400/20 shrink-0">
+        <div className={`flex h-16 items-center border-b border-slate-100 px-4 ${isCollapsed ? 'justify-center' : 'space-x-2'} dark:border-white/10`}>
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-700 shadow-sm">
           <img src={logo} alt="Logo" className="w-4 h-4 object-contain brightness-0 invert" />
         </div>
-        {!isCollapsed && <span className="text-base font-bold text-emerald-950 dark:text-white tracking-tight truncate">crystalgreengold</span>}
+        {!isCollapsed && <span className="truncate text-sm font-semibold tracking-tight text-slate-900 dark:text-white">NexoraLife Global</span>}
       </div>
 
-      <nav className="flex-1 overflow-y-auto px-2 py-2 space-y-0.5 custom-scrollbar">
+      <nav className="custom-scrollbar flex-1 space-y-1 overflow-y-auto px-3 py-4">
         {menuItems.map((item, index) => {
           if (item.section) {
             return !isCollapsed && (
-              <div key={index} className="pt-2 pb-1 px-3 text-[8px] font-bold text-emerald-400 dark:text-emerald-600 uppercase tracking-[0.2em] truncate">
+              <div key={index} className="truncate px-3 pb-2 pt-5 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                 {item.section}
               </div>
             );
@@ -110,20 +110,20 @@ const menuItems = [
               key={index}
               onClick={() => item.id && setActiveTab(item.id)}
               title={isCollapsed ? item.label : ''}
-              className={`w-full flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'} px-2.5 py-1.5 rounded-lg transition-all group ${
+              className={`group flex w-full items-center ${isCollapsed ? 'justify-center' : 'justify-between'} rounded-md px-3 py-2.5 transition-colors ${
                 isActive 
-                  ? 'bg-amber-400/10 text-amber-400' 
-                  : 'text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-white/5 hover:text-emerald-950 dark:hover:text-emerald-100'
+                  ? 'bg-emerald-50 text-emerald-800 dark:bg-lime-400/10 dark:text-lime-300'
+                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-white'
               }`}
             >
-              <div className="flex items-center space-x-2">
-                <Icon size={16} className={isActive ? 'text-amber-400' : 'text-emerald-400 dark:text-emerald-600 group-hover:text-emerald-700 dark:group-hover:text-emerald-200'} />
-                {!isCollapsed && <span className="text-[11px] font-semibold truncate">{item.label}</span>}
+              <div className="flex items-center space-x-3">
+                <Icon size={17} className={isActive ? 'text-emerald-700 dark:text-lime-300' : 'text-slate-400 group-hover:text-slate-700 dark:text-slate-500 dark:group-hover:text-slate-200'} />
+                {!isCollapsed && <span className="truncate text-sm font-medium">{item.label}</span>}
               </div>
               {!isCollapsed && (
                 <>
-                  {item.badge && <span className="text-amber-400 text-sm leading-none">{item.badge}</span>}
-                  {!item.badge && isActive && <ChevronRight size={10} className="text-amber-400" />}
+                  {item.badge && <span className="text-lime-400 text-sm leading-none">{item.badge}</span>}
+                  {!item.badge && isActive && <ChevronRight size={14} className="text-emerald-700 dark:text-lime-300" />}
                 </>
               )}
             </button>
@@ -131,14 +131,14 @@ const menuItems = [
         })}
       </nav>
 
-      <div className="p-2 border-t border-emerald-100 dark:border-white/5">
+      <div className="border-t border-slate-200 p-3 dark:border-white/10">
         <button 
           onClick={onLogout}
           title={isCollapsed ? 'Logout' : ''}
-          className={`w-full flex items-center ${isCollapsed ? 'justify-center' : 'space-x-2'} px-2.5 py-1.5 rounded-lg text-emerald-600 dark:text-emerald-400 hover:bg-red-500/10 hover:text-red-500 transition-all group`}
+          className={`group flex w-full items-center ${isCollapsed ? 'justify-center' : 'space-x-3'} rounded-md px-3 py-2.5 text-slate-600 transition-colors hover:bg-red-50 hover:text-red-600 dark:text-slate-400 dark:hover:bg-red-500/10 dark:hover:text-red-400`}
         >
-          <LogOut size={16} className="text-emerald-400 dark:text-emerald-600 group-hover:text-red-500 shrink-0" />
-          {!isCollapsed && <span className="text-[11px] font-semibold">Logout</span>}
+          <LogOut size={17} className="shrink-0" />
+          {!isCollapsed && <span className="text-sm font-medium">Logout</span>}
         </button>
       </div>
     </aside>

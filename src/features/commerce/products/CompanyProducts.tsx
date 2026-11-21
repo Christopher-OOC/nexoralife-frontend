@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'motion/react';
-import { Search, ShoppingBag, ChevronLeft, ChevronRight, ShoppingCart, Loader2 } from 'lucide-react';
-import { Button } from '@/shared/ui/Button';
+import { Search, ShoppingBag, ChevronLeft, ChevronRight, ShoppingCart, Loader2, PackageSearch, ArrowUpRight, RefreshCw } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { ErrorState } from '@/shared/ui/ErrorState';
 import { useCart } from '@/features/cart/CartContext';
 import { normalizeProduct } from '@/lib/utils/data-normalization';
@@ -43,6 +46,7 @@ export const CompanyProducts: React.FC<CompanyProductsProps> = ({ onSelectProduc
   const [categories, setCategories] = useState<Category[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState<Product[]>([]);
+  const [totalElements, setTotalElements] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -69,6 +73,7 @@ export const CompanyProducts: React.FC<CompanyProductsProps> = ({ onSelectProduc
       const productData = (result.data || []).map(normalizeProduct);
       setProducts(productData);
       setTotalPages(result.totalPages);
+      setTotalElements(result.totalElements);
     } catch (err: any) {
       console.warn('Product catalog request failed, trying unfiltered fallback.');
       // Fallback: If paginated fetch fails, try fetching all and handle locally
@@ -77,6 +82,7 @@ export const CompanyProducts: React.FC<CompanyProductsProps> = ({ onSelectProduc
         const productData = (result.data || []).map(normalizeProduct);
         setProducts(productData);
         setTotalPages(1); // Client-side fallback usually means 1 page of all results or we'd need more logic
+        setTotalElements(productData.length);
       } catch (fallbackErr: any) {
         console.warn('Product catalog fallback request failed.');
         setProducts([]);
@@ -157,44 +163,38 @@ export const CompanyProducts: React.FC<CompanyProductsProps> = ({ onSelectProduc
   }
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-amber-400 text-white rounded-xl flex items-center justify-center shadow-lg shadow-amber-400/20">
-            <ShoppingBag size={20} />
-          </div>
-          <div>
-            <h2 className="text-lg font-bold text-emerald-950 dark:text-white">National Center</h2>
-            <p className="text-emerald-600 dark:text-emerald-400 text-xs">Browse and purchase our official products</p>
-          </div>
+    <div className="mx-auto w-full max-w-7xl space-y-6 py-2">
+      <header className="flex flex-col gap-5 border-b border-slate-200 pb-6 dark:border-white/10 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Shop / National Center</p>
+          <h2 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white">Official products</h2>
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Browse the current product catalog and find what you need.</p>
         </div>
-        <div className="flex items-center space-x-2">
-          <Button 
-            onClick={onBuyPackage} 
-            className="bg-amber-400 hover:bg-amber-400 text-white px-4 py-1.5 rounded-lg font-bold text-xs"
-          >
-            Buy a package
+        <Button onClick={onBuyPackage} className="h-10 px-4">
+          <ShoppingBag size={16} /> Buy a package
+        </Button>
+      </header>
+
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative w-full sm:max-w-md">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+          <Input type="text" placeholder="Search products..." value={searchQuery} onChange={handleSearch} aria-label="Search products" className="h-10 pl-9" />
+        </div>
+        <div className="flex items-center justify-between gap-3 sm:justify-end">
+          <p className="text-sm tabular-nums text-slate-500 dark:text-slate-400">{totalElements.toLocaleString()} products</p>
+          <Button type="button" variant="ghost" size="icon" onClick={() => void fetchData(currentPage, searchQuery, activeCategoryId)} disabled={isLoading} aria-label="Refresh products" title="Refresh products">
+            <RefreshCw className={isLoading ? 'animate-spin' : ''} />
           </Button>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-400" size={16} />
-            <input 
-              type="text" 
-              placeholder="Search products..." 
-              value={searchQuery} 
-              onChange={handleSearch}
-              className="pl-9 pr-3 py-1.5 bg-white dark:bg-emerald-950 border border-emerald-100 dark:border-white/10 rounded-lg outline-none focus:ring-2 focus:ring-amber-400/20 focus:border-amber-400 transition-all w-48 text-xs" 
-            />
-          </div>
         </div>
       </div>
 
-      <div className="flex items-center space-x-3 overflow-x-auto pb-1 no-scrollbar">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar" aria-label="Product categories">
         <button 
           onClick={() => handleCategoryChange('')}
-          className={`px-4 py-1.5 rounded-full text-[10px] font-bold whitespace-nowrap transition-all ${
+          className={`rounded-md border px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
             activeCategoryId === ''
-              ? 'bg-amber-400 text-white shadow-lg shadow-amber-400/20'
-              : 'bg-white dark:bg-emerald-950 text-emerald-600 border border-emerald-100 dark:border-white/10 hover:border-amber-400 hover:text-amber-400'
+            ? 'border-emerald-700 bg-emerald-700 text-white shadow-sm'
+              : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-white/10 dark:bg-slate-950 dark:text-slate-300 dark:hover:bg-white/5'
           }`}
         >
           All Categories
@@ -203,10 +203,10 @@ export const CompanyProducts: React.FC<CompanyProductsProps> = ({ onSelectProduc
           <button 
             key={category.id} 
             onClick={() => handleCategoryChange(String(category.id))}
-            className={`px-4 py-1.5 rounded-full text-[10px] font-bold whitespace-nowrap transition-all ${
+            className={`rounded-md border px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
               activeCategoryId === String(category.id)
-                ? 'bg-amber-400 text-white shadow-lg shadow-amber-400/20'
-                : 'bg-white dark:bg-emerald-950 text-emerald-600 border border-emerald-100 dark:border-white/10 hover:border-amber-400 hover:text-amber-400'
+              ? 'border-emerald-700 bg-emerald-700 text-white shadow-sm'
+              : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-white/10 dark:bg-slate-950 dark:text-slate-300 dark:hover:bg-white/5'
             }`}
           >
             {category.name}
@@ -215,7 +215,8 @@ export const CompanyProducts: React.FC<CompanyProductsProps> = ({ onSelectProduc
       </div>
 
       {filtered.length === 0 ? (
-        <div className="text-center py-20 text-emerald-400 font-bold">
+        <div className="flex min-h-64 flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-slate-300 text-center text-slate-500 dark:border-white/15 dark:text-slate-400">
+          <PackageSearch className="size-8" />
           {searchQuery ? 'No products match your search.' : 'No products found.'}
         </div>
       ) : (
@@ -229,13 +230,13 @@ export const CompanyProducts: React.FC<CompanyProductsProps> = ({ onSelectProduc
               className="group cursor-pointer" 
               onClick={() => onSelectProduct(product)}
             >
-              <div className="bg-white dark:bg-emerald-950 rounded-2xl overflow-hidden shadow-sm border border-emerald-50 dark:border-white/5 hover:shadow-xl transition-all duration-500">
-                <div className="relative aspect-square overflow-hidden bg-white dark:bg-white/5">
+              <Card className="overflow-hidden rounded-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
+                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                   {product.image ? (
                     <img 
                       src={product.image} 
                       alt={product.name} 
-                      className="w-full h-full object-contain p-6 group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-full object-contain p-6 transition-transform duration-500 group-hover:scale-105"
                       referrerPolicy="no-referrer"
                       onError={(e) => {
                         // Handle image load error
@@ -247,48 +248,48 @@ export const CompanyProducts: React.FC<CompanyProductsProps> = ({ onSelectProduc
                   <div className={`w-full h-full flex items-center justify-center text-emerald-200 text-4xl ${product.image ? 'hidden' : ''}`}>
                     📦
                   </div>
-                  <div className="absolute top-3 right-3 bg-white/80 dark:bg-emerald-900/80 backdrop-blur-md px-2 py-0.5 rounded-full text-[9px] font-black text-amber-400 shadow-sm">
-                    {product.pv} PV
-                  </div>
-                  <div 
-                    className="absolute inset-0 bg-amber-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
-                    onClick={(e) => handleAddToCart(product, e)}
-                  >
-                    <div className="rounded-full p-3 bg-white text-amber-400 hover:bg-amber-400 hover:text-white transition-all transform translate-y-3 group-hover:translate-y-0 duration-300 cursor-pointer">
-                      <ShoppingCart size={20} />
-                    </div>
-                  </div>
+                  <Badge variant="secondary" className="absolute left-3 top-3 border border-slate-200 bg-background/90 text-slate-700 shadow-sm dark:border-white/10 dark:text-slate-200">
+                    {product.availableQuantity && product.availableQuantity > 0 ? `${product.availableQuantity} in stock` : 'Catalog item'}
+                  </Badge>
                 </div>
-                <div className="p-4 space-y-2">
+                <CardContent className="flex min-h-52 flex-col space-y-3 p-4">
                   <div className="space-y-0.5">
-                    <p className="text-[9px] font-bold text-emerald-400 uppercase tracking-widest">
+                    <p className="text-xs font-medium text-muted-foreground">
                       {getCategoryName(product.category)}
                     </p>
-                    <h3 className="font-bold text-sm text-emerald-950 dark:text-white group-hover:text-amber-400 transition-colors truncate">
+                    <h3 className="truncate font-semibold text-foreground transition-colors group-hover:text-primary">
                       {product.name}
                     </h3>
                   </div>
-                  <div className="flex items-center justify-between pt-2 border-t border-white dark:border-white/5">
-                    <span className="text-lg font-black text-amber-400">
-                      ₦{product.price?.toLocaleString() ?? '0'}
+                  <div className="flex items-end justify-between gap-3 border-t border-slate-100 pt-3 dark:border-white/10">
+                    <span className="text-lg font-semibold tabular-nums text-slate-950 dark:text-white">
+                      ₦{Number(product.price ?? 0).toLocaleString('en-NG')}
                     </span>
-                    <div className="flex items-center space-x-1 text-[9px] font-bold text-emerald-400">
-                      <span>BV: {product.bv}</span>
+                    <div className="text-right text-xs text-muted-foreground">
+                      <span>{product.pv} PV · {product.bv} BV</span>
                     </div>
                   </div>
-                </div>
-              </div>
+                  <div className="mt-auto grid grid-cols-2 gap-2">
+                    <Button type="button" variant="outline" size="sm" onClick={(event) => { event.stopPropagation(); onSelectProduct(product); }}>
+                      View details <ArrowUpRight size={15} />
+                    </Button>
+                    <Button type="button" size="sm" onClick={(event) => handleAddToCart(product, event)}>
+                      <ShoppingCart size={15} /> Add to cart
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
           ))}
         </div>
       )}
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-center space-x-2 pt-8">
+        <div className="flex items-center justify-center gap-1 pt-4">
           <button 
             onClick={() => setCurrentPage(p => Math.max(1, p - 1))} 
             disabled={currentPage === 1}
-            className="p-2 rounded-lg border border-emerald-100 dark:border-white/10 text-emerald-400 hover:text-amber-400 hover:border-amber-400 transition-all disabled:opacity-50 disabled:hover:border-emerald-100 disabled:hover:text-emerald-400"
+            className="rounded-md border border-slate-200 p-2 text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-40 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
             aria-label="Previous page"
           >
             <ChevronLeft size={20} />
@@ -310,10 +311,10 @@ export const CompanyProducts: React.FC<CompanyProductsProps> = ({ onSelectProduc
               <button 
                 key={pageNum} 
                 onClick={() => setCurrentPage(pageNum)}
-                className={`w-10 h-10 rounded-lg font-bold transition-all ${
+                className={`h-9 min-w-9 rounded-md px-3 text-sm font-medium transition-all ${
                   currentPage === pageNum 
-                    ? 'bg-amber-400 text-white shadow-lg shadow-amber-400/20' 
-                    : 'text-emerald-600 hover:bg-emerald-50 dark:hover:bg-white/5'
+                    ? 'bg-emerald-700 text-white shadow-sm'
+                    : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5'
                 }`}
               >
                 {pageNum}
@@ -323,7 +324,7 @@ export const CompanyProducts: React.FC<CompanyProductsProps> = ({ onSelectProduc
           <button 
             onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} 
             disabled={currentPage === totalPages}
-            className="p-2 rounded-lg border border-emerald-100 dark:border-white/10 text-emerald-400 hover:text-amber-400 hover:border-amber-400 transition-all disabled:opacity-50 disabled:hover:border-emerald-100 disabled:hover:text-emerald-400"
+            className="rounded-md border border-slate-200 p-2 text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-40 dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
             aria-label="Next page"
           >
             <ChevronRight size={20} />

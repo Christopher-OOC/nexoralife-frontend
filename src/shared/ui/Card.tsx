@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, HTMLMotionProps } from 'motion/react';
+import { cn } from '@/lib/utils';
 
 interface CardProps extends HTMLMotionProps<'div'> {
   children: React.ReactNode;
@@ -22,14 +23,13 @@ export const Card: React.FC<CardProps> = ({
   
   return (
     <motion.div
-      className={`
-        bg-white dark:bg-emerald-900/30
-        border border-emerald-100 dark:border-emerald-600/20
-        ${roundedClass} shadow-sm
-        ${!noPadding ? 'p-8' : ''}
-        ${hover ? 'hover:shadow-md hover:scale-[1.01] transition-all duration-300' : ''}
-        ${className}
-      `}
+      className={cn(
+        'border border-border bg-card text-card-foreground shadow-sm',
+        roundedClass,
+        !noPadding && 'p-6',
+        hover && 'transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md',
+        className,
+      )}
       {...props}
     >
       {children}

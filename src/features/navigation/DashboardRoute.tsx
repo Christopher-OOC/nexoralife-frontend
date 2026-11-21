@@ -5,13 +5,13 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Dashboard } from '@/features/dashboard/Dashboard';
 import { useAuth } from '@/features/auth/AuthContext';
 import { getDashboardTabFromPath, getDashboardTabPath, type DashboardTab } from '@/features/navigation/paths';
-import { useCrystalgreengoldTheme } from '@/features/navigation/useCrystalgreengoldTheme';
+import { useNexoraLifeTheme } from '@/features/navigation/useNexoraLifeTheme';
 
 export function DashboardRoute({ tab }: { tab: DashboardTab }) {
   const router = useRouter();
   const pathname = usePathname();
   const { isAuthenticated, logout } = useAuth();
-  const { isDark, setIsDark } = useCrystalgreengoldTheme();
+  const { isDark, setIsDark } = useNexoraLifeTheme();
   const routeTab = getDashboardTabFromPath(pathname) ?? tab;
 
   useEffect(() => {
@@ -38,4 +38,3 @@ export function DashboardRoute({ tab }: { tab: DashboardTab }) {
     />
   );
 }
-

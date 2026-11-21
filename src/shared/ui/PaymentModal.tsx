@@ -240,7 +240,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
                     {!flutterwaveKey && (
                       <p className="text-xs text-amber-400 font-medium bg-amber-50 dark:bg-amber-400/10 px-4 py-3 rounded-xl">
-                        Flutterwave is not configured. Please set <strong>CRYSTAL_GREEN_GOLD_FLUTTERWAVE_PUBLIC_KEY</strong> or <strong>NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY</strong> in your environment.
+                        Flutterwave is not configured. Please set <strong>NEXORALIFE_FLUTTERWAVE_PUBLIC_KEY</strong> or <strong>NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY</strong> in your environment.
                       </p>
                     )}
 

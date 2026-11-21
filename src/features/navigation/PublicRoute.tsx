@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation';
 import { HomePage, type ActiveView } from '@/features/landing/HomePage';
 import { useAuth } from '@/features/auth/AuthContext';
 import { getPublicViewPath } from '@/features/navigation/paths';
-import { useCrystalgreengoldTheme } from '@/features/navigation/useCrystalgreengoldTheme';
+import { useNexoraLifeTheme } from '@/features/navigation/useNexoraLifeTheme';
 
 export function PublicRoute({ view }: { view: ActiveView }) {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
-  const { isDark, setIsDark } = useCrystalgreengoldTheme();
+  const { isDark, setIsDark } = useNexoraLifeTheme();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -29,4 +29,3 @@ export function PublicRoute({ view }: { view: ActiveView }) {
     />
   );
 }
-

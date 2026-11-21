@@ -75,7 +75,7 @@ export const CreateCategory: React.FC<CreateCategoryProps> = ({
       setTimeout(() => {
         setShowSuccessModal(false);
         if (onSuccess) onSuccess();
-      }, 2000);
+      }, 2000)
       
     } catch (err: any) {
       console.error('Error saving category:', err);

@@ -1,5 +1,3 @@
-import logoImage from '@/shared/assets/logo.png';
-
-const logo = typeof logoImage === 'string' ? logoImage : logoImage.src;
+const logo = '/nexoralife-mark.svg';
 
 export default logo;

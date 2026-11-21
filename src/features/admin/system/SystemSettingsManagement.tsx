@@ -294,7 +294,7 @@ export const SystemSettingsManagement: React.FC<SystemSettingsManagementProps> =
               </div>
               <h3 className="text-2xl font-black tracking-tight">System Guide</h3>
               <p className="text-emerald-100 text-sm leading-relaxed font-medium">
-                These settings control the core financial and growth logic of the entire crystalgreengold platform.
+                These settings control the core financial and growth logic of the NexoraLife platform.
               </p>
               <ul className="space-y-3">
                 {[
@@ -348,4 +348,3 @@ export const SystemSettingsManagement: React.FC<SystemSettingsManagementProps> =
     </div>
   );
 };
-

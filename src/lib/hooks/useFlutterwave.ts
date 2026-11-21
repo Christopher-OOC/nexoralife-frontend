@@ -15,6 +15,7 @@ export const resolveFlutterwavePublicKey = (
   env: Record<string, string | undefined> = process.env
 ) => {
   const resolvedKey =
+    env.NEXORALIFE_FLUTTERWAVE_PUBLIC_KEY ||
     env.CRYSTAL_GREEN_GOLD_FLUTTERWAVE_PUBLIC_KEY ||
     env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY ||
     env.VITE_FLUTTERWAVE_PUBLIC_KEY ||
@@ -44,7 +45,7 @@ export const useFlutterwave = ({
       name: name || '',
     },
     customizations: {
-      title: 'CrystalGreenGold Payment',
+      title: 'NexoraLife Payment',
       description: 'Complete your payment securely',
       logo: '',
     },
@@ -54,7 +55,7 @@ export const useFlutterwave = ({
 
   const pay = () => {
     if (!publicKey) {
-      throw new Error('Flutterwave is not configured. Please set CRYSTAL_GREEN_GOLD_FLUTTERWAVE_PUBLIC_KEY or NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY.');
+      throw new Error('Flutterwave is not configured. Please set NEXORALIFE_FLUTTERWAVE_PUBLIC_KEY or NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY.');
     }
 
     if (!Number.isFinite(amount) || amount <= 0) {

@@ -10,9 +10,9 @@ import { SignUpForm } from '@/features/auth/components/SignUpForm';
 import { useAuth } from '@/features/auth/AuthContext';
 import logo from '@/shared/assets/logo';
 import type { AuthPage } from '@/features/navigation/paths';
-import { useCrystalgreengoldTheme } from '@/features/navigation/useCrystalgreengoldTheme';
+import { useNexoraLifeTheme } from '@/features/navigation/useNexoraLifeTheme';
 import personnelImage from '@/shared/assets/personnel.jpeg';
-import bottleImage from '@/shared/assets/bottle.jpg';
+import bottleImage from '@/shared/assets/bottle.png';
 import Image from 'next/image';
 import { p } from 'motion/react-client';
 
@@ -22,7 +22,7 @@ const BACKGROUND_IMAGES = [bottleImage, personnelImage];
 export function AuthRoute({ page }: { page: AuthPage }) {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
-  const { isDark, setIsDark } = useCrystalgreengoldTheme();
+  const { isDark, setIsDark } = useNexoraLifeTheme();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export function AuthRoute({ page }: { page: AuthPage }) {
             <Image
               key={`${page}-${currentImageIndex}`}
               src={BACKGROUND_IMAGES[currentImageIndex]}
-              alt="crystalgreengold Lifestyle"
+              alt="NexoraLife Global wellness"
               className="absolute inset-0 w-full h-full object-cover"
               referrerPolicy="no-referrer"
             />
@@ -95,17 +95,18 @@ export function AuthRoute({ page }: { page: AuthPage }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <div className="relative inline-block">
+              <div className="inline-flex items-center gap-3">
                 <img
                   src={logo}
-                  alt="crystalgreengold Logo"
-                  className={`h-16 md:h-20 w-auto object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] transition-all duration-700 ${
+                  alt="NexoraLife Global logo"
+                  className={`h-12 w-12 object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] transition-all duration-700 md:h-14 md:w-14 ${
                     page === 'signup' ? 'brightness-0 invert' : ''
                   }`}
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                   }}
                 />
+                <span className="text-xl font-semibold tracking-tight text-white md:text-2xl">NexoraLife Global</span>
               </div>
             </motion.div>
 
@@ -132,17 +133,17 @@ export function AuthRoute({ page }: { page: AuthPage }) {
               transition={{ delay: 0.7 }}
               className="text-white/80 text-base max-w-md leading-relaxed font-light"
             >
-              Create an account to start earning bonuses by referring people and earn more when they start buying our products.
+              Create an account to explore quality wellness products and learn about independent distribution opportunities with NexoraLife.
             </motion.p>
 
             {page === 'signup' && (
               <div className="space-y-4 pt-4">
                 {[
-                  { title: 'Quality First', desc: 'We deliver only premium products that enrich everyday living.' },
-                  { title: 'Empowerment', desc: 'We provide opportunities that inspire growth, independence, and success.' },
-                  { title: 'Integrity', desc: 'We uphold honesty, trust, and transparency in all we do.' },
-                  { title: 'Community', desc: 'We believe in collaboration, support, and shared prosperity.' },
-                  { title: 'Innovation', desc: 'We continuously evolve to meet the changing needs of our members and customers.' },
+                  { title: 'Quality', desc: 'We select products with care and value customer satisfaction.' },
+                  { title: 'Empowerment', desc: 'We encourage personal growth, useful skills, and meaningful opportunities.' },
+                  { title: 'Integrity', desc: 'We believe in honesty, transparency, and accountability.' },
+                  { title: 'Community', desc: 'We believe in cooperation, mutual respect, and shared progress.' },
+                  { title: 'Innovation', desc: 'We welcome fresh ideas and look for better ways to serve.' },
                 ].map((feature, i) => (
                   <motion.div
                     key={i}
@@ -220,4 +221,3 @@ export function AuthRoute({ page }: { page: AuthPage }) {
     </div>
   );
 }
-

@@ -4,8 +4,8 @@ import { AppProviders } from '@/app/providers';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'crystalgreengold',
-  description: 'The crystalgreengold frontend application',
+  title: 'NexoraLife Global Ltd',
+  description: 'Natural wellness, empowered people, brighter futures.',
 };
 
 export default function RootLayout({
@@ -21,4 +21,3 @@ export default function RootLayout({
     </html>
   );
 }
-

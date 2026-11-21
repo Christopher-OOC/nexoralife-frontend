@@ -1,45 +1,108 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-@variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:is(.dark *));
 
-@theme {
+@theme inline {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Playfair Display", serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 :root {
-  --bg-gradient: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
-  --card-bg: rgba(255, 255, 255, 0.95);
-  --text-primary: #042f2e;
-  --text-secondary: #0d5c52;
-  --accent: #fbbf24; /* Gold */
+  color-scheme: light;
+  --radius: 0.5rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.19 0.02 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.19 0.02 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.19 0.02 260);
+  --primary: oklch(0.78 0.2 128);
+  --primary-foreground: oklch(0.16 0.02 255);
+  --secondary: oklch(0.96 0.01 250);
+  --secondary-foreground: oklch(0.28 0.02 260);
+  --muted: oklch(0.97 0.005 250);
+  --muted-foreground: oklch(0.52 0.02 255);
+  --accent: oklch(0.94 0.08 128);
+  --accent-foreground: oklch(0.25 0.08 128);
+  --destructive: oklch(0.58 0.22 27);
+  --border: oklch(0.91 0.01 255);
+  --input: oklch(0.91 0.01 255);
+  --ring: oklch(0.72 0.18 128);
 }
 
 .dark {
-  --bg-gradient: linear-gradient(135deg, #042f2e 0%, #064e48 100%);
-  --card-bg: rgba(10, 60, 55, 0.8);
-  --text-primary: #f0fdf4;
-  --text-secondary: #a7f3d0;
-  --accent: #fbbf24;
+  color-scheme: dark;
+  --background: oklch(0.12 0.012 255);
+  --foreground: oklch(0.97 0.01 250);
+  --card: oklch(0.16 0.014 255);
+  --card-foreground: oklch(0.97 0.01 250);
+  --popover: oklch(0.16 0.014 255);
+  --popover-foreground: oklch(0.97 0.01 250);
+  --primary: oklch(0.84 0.22 128);
+  --primary-foreground: oklch(0.16 0.02 255);
+  --secondary: oklch(0.27 0.02 255);
+  --secondary-foreground: oklch(0.95 0.01 250);
+  --muted: oklch(0.25 0.02 255);
+  --muted-foreground: oklch(0.71 0.02 255);
+  --accent: oklch(0.28 0.08 128);
+  --accent-foreground: oklch(0.9 0.16 128);
+  --destructive: oklch(0.65 0.2 25);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.84 0.22 128);
 }
+
+* { border-color: var(--border); }
+
+html { background: var(--background); }
 
 body {
-  @apply bg-white text-emerald-950 transition-colors duration-300;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
 
-.dark body {
-  @apply bg-emerald-950 text-emerald-50;
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
-/* Glassmorphism utility */
+::selection { background: color-mix(in srgb, var(--primary) 20%, transparent); }
+
 .glass {
-  background: var(--card-bg);
+  background: color-mix(in srgb, var(--background) 92%, transparent);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
 }
 
-.dark .glass {
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
+.custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 999px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }

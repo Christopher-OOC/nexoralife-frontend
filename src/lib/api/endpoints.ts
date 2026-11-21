@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// All Spring Boot endpoint URL constants for crystalgreengold
+// All Spring Boot endpoint URL constants for NexoraLife
 // Base: http://localhost:8080  (set via NEXT_PUBLIC_API_URL)
 // Version prefix: /api/v1
 // ─────────────────────────────────────────────────────────────────────────────
