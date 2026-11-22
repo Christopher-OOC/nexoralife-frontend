@@ -178,13 +178,13 @@ export const CreatePackage: React.FC<CreatePackageProps> = ({ onBack, editPackag
               className="w-full bg-white dark:bg-emerald-950 border border-emerald-100 dark:border-white/10 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-amber-400/20 focus:border-amber-400 transition-all font-medium">
               <option value="">Select package name</option>
               <option value="STARTER">STARTER</option>
-              <option value="BASIC">GOLD</option>
-              <option value="BRONZE">BUILDER</option>
-              <option value="SILVER">ADVANCE</option>
-              <option value="GOLD">LEADER</option>
-              <option value="PLATINUM">EXECUTIVE</option>
-              <option value="DIAMOND">DIRECTOR</option>
-               <option value="DIAMOND">PRESIDENT</option>
+              <option value="GOLD">GOLD</option>
+              <option value="BUILDER">BUILDER</option>
+              <option value="ADVANCE">ADVANCE</option>
+              <option value="LEADER">LEADER</option>
+              <option value="EXECUTIVE">EXECUTIVE</option>
+              <option value="DIRECTOR">DIRECTOR</option>
+               <option value="PRESIDENT">PRESIDENT</option>
             </select>
           </div>
           <div className="space-y-2">
