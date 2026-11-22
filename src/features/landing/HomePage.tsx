@@ -16,7 +16,7 @@ import { useProducts } from '@/lib/hooks/useDomain';
 import { getProductImage, getCategoryName } from '@/lib/types/product.types';
 import type { Product } from '@/lib/types/product.types';
 import logo from '@/shared/assets/logo';
-import personnelImage from '@/shared/assets/personnel.jpeg';
+import personnelImage from '@/shared/assets/personnel.png';
 import bottleImage from '@/shared/assets/bottle.png';
 import Image from 'next/image';
 

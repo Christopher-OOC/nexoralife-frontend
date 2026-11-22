@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import { Card } from '@/shared/ui/Card';
-import personnelImage from '@/shared/assets/personnel.jpeg';
+import personnelImage from '@/shared/assets/personnel.png';
 import bottleImage from '@/shared/assets/bottle.png';
 
 const values = [

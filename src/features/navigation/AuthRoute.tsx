@@ -11,7 +11,7 @@ import { useAuth } from '@/features/auth/AuthContext';
 import logo from '@/shared/assets/logo';
 import type { AuthPage } from '@/features/navigation/paths';
 import { useNexoraLifeTheme } from '@/features/navigation/useNexoraLifeTheme';
-import personnelImage from '@/shared/assets/personnel.jpeg';
+import personnelImage from '@/shared/assets/personnel.png';
 import bottleImage from '@/shared/assets/bottle.png';
 import Image from 'next/image';
 import { p } from 'motion/react-client';
